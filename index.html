@@ -289,12 +289,33 @@
     .hero-grid{ grid-template-columns: 1.15fr 0.85fr; }
   }
   .hero-eyebrow{
+    margin-bottom: 18px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ticker-track{
+    display: flex;
+    width: max-content;
+    animation: ticker 16s linear infinite;
+  }
+  .ticker-track span{
     font-family:'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--ink-dim);
-    margin-bottom: 18px;
+    white-space: nowrap;
+    padding-right: 14px;
+    margin-right: 14px;
+    border-right: 1px solid var(--line);
   }
-  .hero-eyebrow .accent{ color: var(--accent); }
+  .ticker-track span::before{ content: "▹ "; color: var(--accent); }
+  @keyframes ticker{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation: none; }
+  }
   h1.name{
     font-size: clamp(38px, 6vw, 58px);
     line-height: 1.05;
@@ -738,7 +759,12 @@
 <section id="home">
   <div class="wrap hero-grid">
     <div>
-      <div class="hero-eyebrow">RPA Developer <span class="accent">·</span> Blue Prism AD01 Certified</div>
+      <div class="hero-eyebrow">
+        <div class="ticker-track" id="tickerTrack">
+          <span>RPA</span><span>Blue Prism</span><span>Power Apps</span><span>Power Automate Desktop</span>
+          <span>RPA</span><span>Blue Prism</span><span>Power Apps</span><span>Power Automate Desktop</span>
+        </div>
+      </div>
       <h1 class="name">Dilshad Khan</h1>
       <p class="hero-tagline">I design and build automation systems that quietly take repetitive work off people's plates — 5+ years turning manual, error-prone processes into reliable bots.</p>
       <div class="hero-meta">
@@ -1038,6 +1064,7 @@
         });
       });
     }
+
   });
 </script>
 
