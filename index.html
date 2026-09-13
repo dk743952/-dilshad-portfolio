@@ -107,6 +107,50 @@
   .navlinks{ display:none; }
   @media (min-width: 720px){ .navlinks{ display:flex; } }
 
+  /* ---------- MOBILE MENU ---------- */
+  .menu-toggle{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+    padding: 0;
+  }
+  .menu-toggle span{
+    display:block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--ink);
+    margin: 0 auto;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .menu-toggle.open span:nth-child(1){ transform: translateY(6.5px) rotate(45deg); }
+  .menu-toggle.open span:nth-child(2){ opacity: 0; }
+  .menu-toggle.open span:nth-child(3){ transform: translateY(-6.5px) rotate(-45deg); }
+  @media (min-width: 720px){ .menu-toggle{ display:none; } }
+
+  .mobile-dropdown{
+    display:none;
+    flex-direction: column;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-dropdown.open{ display:flex; }
+  .mobile-dropdown a{
+    padding: 14px 28px;
+    text-decoration:none;
+    color: var(--ink-dim);
+    font-size: 15px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-dropdown a:hover, .mobile-dropdown a:focus-visible{ color: var(--ink); background: var(--panel); }
+  @media (min-width: 720px){ .mobile-dropdown{ display:none !important; } }
+
   a:focus-visible, button:focus-visible{
     outline: 2px solid var(--accent);
     outline-offset: 3px;
@@ -136,7 +180,7 @@
     align-items:center;
   }
   .photo-panel::before{
-    content: "FIG. 00 — OPERATOR";
+    content: "FIG. 00 — DILSHAD";
     position:absolute;
     top: -11px; left: 18px;
     background: var(--bg);
@@ -677,7 +721,18 @@
       <li><a href="#certifications">Certifications</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <div class="mobile-dropdown" id="mobileDropdown">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
 </header>
 
 <section id="home">
@@ -705,7 +760,7 @@
       <div class="photo-info">
         <div class="name-small">Dilshad Khan</div>
         <div class="role-small">RPA Developer · Blue Prism AD01</div>
-        <div class="hint">Hover to bring into focus</div>
+        <div class="hint">Tap or hover to bring into focus</div>
       </div>
     </div>
     <div class="diagram-wrap">
@@ -966,6 +1021,23 @@
     }
     window.addEventListener('scroll', updateBar, { passive: true });
     updateBar();
+
+    var toggle = document.getElementById('menuToggle');
+    var dropdown = document.getElementById('mobileDropdown');
+    if (toggle && dropdown) {
+      toggle.addEventListener('click', function () {
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      dropdown.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          dropdown.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
   });
 </script>
 
