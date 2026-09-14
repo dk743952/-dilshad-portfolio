@@ -1078,19 +1078,17 @@
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
-  if (!window.location.hash) {
-    window.scrollTo(0, 0);
-  }
+  window.scrollTo(0, 0);
   window.addEventListener('load', function () {
-    if (!window.location.hash) { window.scrollTo(0, 0); }
+    window.scrollTo(0, 0);
   });
   window.addEventListener('pageshow', function () {
-    if (!window.location.hash) { window.scrollTo(0, 0); }
+    window.scrollTo(0, 0);
   });
+  setTimeout(function () { window.scrollTo(0, 0); }, 0);
+  setTimeout(function () { window.scrollTo(0, 0); }, 150);
   document.addEventListener('DOMContentLoaded', function () {
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
     var bar = document.getElementById('scrollbar');
     function updateBar(){
       var h = document.documentElement;
